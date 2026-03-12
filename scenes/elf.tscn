@@ -238,7 +238,7 @@ tracks/13/keys = {
 }
 
 [sub_resource type="Animation" id="run_anim"]
-resource_name = "run"
+resource_name = "walk"
 length = 0.5
 loop_mode = 1
 ; --- Body: vertical bounce on each step + gentle tilt ---
@@ -481,15 +481,33 @@ tracks/18/keys = {
 
 [sub_resource type="AnimationLibrary" id="anim_lib"]
 _data = {
-"run": SubResource("run_anim"),
+"walk": SubResource("run_anim"),
 "stand": SubResource("stand_anim")
 }
+
+[sub_resource type="GDScript" id="shadow_script"]
+script/source = "extends Node2D
+
+func _draw() -> void:
+	draw_ellipse(Vector2.ZERO, Vector2(50, 15), Color(0, 0, 0, 0.35))
+
+func draw_ellipse(center: Vector2, size: Vector2, color: Color) -> void:
+	var points := PackedVector2Array()
+	for i in range(32):
+		var angle := i * TAU / 32.0
+		points.append(center + Vector2(cos(angle) * size.x, sin(angle) * size.y))
+	draw_colored_polygon(points, color)
+"
 
 [sub_resource type="RectangleShape2D" id="collision_shape"]
 size = Vector2(60, 120)
 
 [node name="Elf" type="CharacterBody2D"]
 script = ExtResource("2_script")
+
+[node name="Shadow" type="Node2D" parent="."]
+position = Vector2(5, 155)
+script = SubResource("shadow_script")
 
 [node name="Parts" type="Node2D" parent="."]
 
