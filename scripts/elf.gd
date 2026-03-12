@@ -17,6 +17,7 @@ func _ready() -> void:
 		rest_poses[child.name] = {
 			"position": child.position,
 			"rotation": child.rotation,
+			"scale": child.scale,
 		}
 	depth_scale = _scale_for_y(position.y)
 	parts_root.scale = Vector2(depth_scale, depth_scale)
@@ -27,6 +28,7 @@ func _reset_parts() -> void:
 		if child.name in rest_poses:
 			child.position = rest_poses[child.name]["position"]
 			child.rotation = rest_poses[child.name]["rotation"]
+			child.scale = rest_poses[child.name]["scale"]
 
 func _scale_for_y(y: float) -> float:
 	var t := clampf(y / 623.0, 0.0, 1.0)
