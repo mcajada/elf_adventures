@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/background.jpg" id="1_bg"]
+[ext_resource type="Script" path="res://scripts/main.gd" id="2_script"]
+[ext_resource type="PackedScene" path="res://scenes/elf.tscn" id="3_elf"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("2_script")
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(512, 311.5)
+texture = ExtResource("1_bg")
+stretch_mode = 1
+
+[node name="Elf" parent="." instance=ExtResource("3_elf")]
+position = Vector2(600, 270)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="InfoLabel" type="Label" parent="UI"]
+offset_right = 1024.0
+offset_bottom = 623.0
+text = "Game start"

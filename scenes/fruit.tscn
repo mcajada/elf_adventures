@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/cherry.png" id="1_cherry"]
+[ext_resource type="Script" path="res://scripts/fruit.gd" id="2_script"]
+
+[sub_resource type="RectangleShape2D" id="collision_shape"]
+size = Vector2(85, 89)
+
+[node name="Fruit" type="RigidBody2D"]
+script = ExtResource("2_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("1_cherry")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("collision_shape")
