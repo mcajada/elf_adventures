@@ -18,6 +18,7 @@ var move_factor := 0.0
 var last_direction := Vector2.ZERO
 var click_target := Vector2.ZERO
 var has_click_target := false
+var flipped := false
 
 func _ready() -> void:
 	for child in parts_root.get_children():
@@ -42,7 +43,10 @@ func _scale_for_y(y: float) -> float:
 	return lerpf(MIN_SCALE, MAX_SCALE, t)
 
 func _apply_scale() -> void:
-	parts_root.scale = Vector2(depth_scale, depth_scale)
+	var x_scale := -depth_scale if flipped else depth_scale
+	parts_root.scale = Vector2(x_scale, depth_scale)
+	var shadow_x := -5.0 * depth_scale if flipped else 5.0 * depth_scale
+	shadow.position = Vector2(shadow_x, 155.0 * depth_scale)
 	shadow.scale = Vector2(depth_scale, depth_scale)
 	shadow.modulate.a = clampf(depth_scale * 0.5, 0.1, 0.45)
 
@@ -92,6 +96,10 @@ func _physics_process(delta: float) -> void:
 	if wants_move:
 		move_factor = minf(move_factor + delta / ACCEL_TIME, 1.0)
 		last_direction = direction
+		if direction.x > 0.1:
+			flipped = true
+		elif direction.x < -0.1:
+			flipped = false
 	else:
 		move_factor = maxf(move_factor - delta / DECEL_TIME, 0.0)
 
@@ -133,7 +141,7 @@ func _physics_process(delta: float) -> void:
 		is_moving = false
 
 	if is_moving:
-		var anim_speed := clampf(move_factor * depth_scale * 1.5, 0.3, 2.0)
+		var anim_speed := clampf(move_factor * 1.5, 0.5, 1.5)
 		anim_player.speed_scale = anim_speed
 	else:
 		anim_player.speed_scale = 1.0
