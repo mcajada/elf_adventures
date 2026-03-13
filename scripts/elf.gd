@@ -10,6 +10,8 @@ const ARRIVE_THRESHOLD := 5.0
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
 @onready var parts_root: Node2D = $Parts
 @onready var shadow: Node2D = $Shadow
+@onready var speech_bubble: Node2D = $SpeechBubble
+@onready var quote_fetcher: Node = $QuoteFetcher
 
 var is_moving := false
 var rest_poses := {}
@@ -30,6 +32,8 @@ func _ready() -> void:
 	depth_scale = _scale_for_y(position.y)
 	_apply_scale()
 	anim_player.play("stand")
+	speech_bubble.show_text("Hi. How are you?")
+	quote_fetcher.quote_received.connect(_on_quote_received)
 
 func _reset_parts() -> void:
 	for child in parts_root.get_children():
@@ -49,6 +53,9 @@ func _apply_scale() -> void:
 	shadow.position = Vector2(shadow_x, 155.0 * depth_scale)
 	shadow.scale = Vector2(depth_scale, depth_scale)
 	shadow.modulate.a = clampf(depth_scale * 0.5, 0.1, 0.45)
+	if speech_bubble:
+		speech_bubble.position = Vector2(-130.0 * depth_scale, -60.0 * depth_scale)
+		speech_bubble.scale = Vector2(depth_scale, depth_scale)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
@@ -150,3 +157,6 @@ func _physics_process(delta: float) -> void:
 	_apply_scale()
 
 	z_index = int(position.y)
+
+func _on_quote_received(text: String) -> void:
+	speech_bubble.show_text(text)

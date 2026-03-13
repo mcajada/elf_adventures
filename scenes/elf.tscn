@@ -1,8 +1,10 @@
-[gd_scene load_steps=24 format=3]
+[gd_scene load_steps=26 format=3]
 
 [ext_resource type="Texture2D" path="res://assets/elf_sprite.png" id="1_stand"]
 [ext_resource type="Texture2D" path="res://assets/elf_sprite_run.png" id="1_run"]
 [ext_resource type="Script" path="res://scripts/elf.gd" id="2_script"]
+[ext_resource type="Script" path="res://scripts/speech_bubble.gd" id="4_bubble"]
+[ext_resource type="Script" path="res://scripts/quote_fetcher.gd" id="5_quote"]
 
 ; === Stand spritesheet atlas textures ===
 ; Brush 1 - Eyes open
@@ -567,3 +569,13 @@ shape = SubResource("collision_shape")
 libraries = {
 "": SubResource("anim_lib")
 }
+
+[node name="SpeechBubble" type="Node2D" parent="."]
+position = Vector2(-20, -120)
+script = ExtResource("4_bubble")
+
+[node name="Label" type="Label" parent="SpeechBubble"]
+text = ""
+
+[node name="QuoteFetcher" type="Node" parent="."]
+script = ExtResource("5_quote")
