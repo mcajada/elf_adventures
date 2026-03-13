@@ -489,14 +489,11 @@ _data = {
 script/source = "extends Node2D
 
 func _draw() -> void:
-	draw_ellipse(Vector2.ZERO, Vector2(50, 15), Color(0, 0, 0, 0.35))
-
-func draw_ellipse(center: Vector2, size: Vector2, color: Color) -> void:
 	var points := PackedVector2Array()
 	for i in range(32):
 		var angle := i * TAU / 32.0
-		points.append(center + Vector2(cos(angle) * size.x, sin(angle) * size.y))
-	draw_colored_polygon(points, color)
+		points.append(Vector2(cos(angle) * 50.0, sin(angle) * 15.0))
+	draw_colored_polygon(points, Color(0, 0, 0, 0.35))
 "
 
 [sub_resource type="RectangleShape2D" id="collision_shape"]
