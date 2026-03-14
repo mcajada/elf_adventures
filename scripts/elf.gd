@@ -43,7 +43,7 @@ func _reset_parts() -> void:
 			child.scale = rest_poses[child.name]["scale"]
 
 func _scale_for_y(y: float) -> float:
-	var t := clampf(y / 623.0, 0.0, 1.0)
+	var t := clampf(y / 1024.0, 0.0, 1.0)
 	return lerpf(MIN_SCALE, MAX_SCALE, t)
 
 func _apply_scale() -> void:
@@ -65,7 +65,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		# We can solve: click_y = node_y + 155 * (MIN + (MAX-MIN) * node_y / 623)
 		# => click_y = node_y * (1 + 155*(MAX-MIN)/623) + 155*MIN
 		var feet_offset: float = 155.0
-		var scale_slope: float = (MAX_SCALE - MIN_SCALE) / 623.0
+		var scale_slope: float = (MAX_SCALE - MIN_SCALE) / 1024.0
 		var node_y: float = (event.position.y - feet_offset * MIN_SCALE) / (1.0 + feet_offset * scale_slope)
 		click_target = Vector2(event.position.x, node_y)
 		has_click_target = true
@@ -131,8 +131,8 @@ func _physics_process(delta: float) -> void:
 	var margin_left := 130.0 * s
 	var margin_right := 100.0 * s
 
-	new_pos.x = clampf(new_pos.x, margin_left, 1024.0 - margin_right)
-	new_pos.y = clampf(new_pos.y, margin_top, 623.0 - margin_bottom)
+	new_pos.x = clampf(new_pos.x, margin_left, 623.0 - margin_right)
+	new_pos.y = clampf(new_pos.y, margin_top, 1024.0 - margin_bottom)
 
 	var old_pos := position
 	position = new_pos

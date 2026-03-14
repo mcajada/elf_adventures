@@ -8,9 +8,10 @@
 script = ExtResource("2_script")
 
 [node name="Background" type="Sprite2D" parent="."]
-position = Vector2(512, 311.5)
+position = Vector2(311.5, 512)
+scale = Vector2(2.0, 2.0)
 texture = ExtResource("1_bg")
 stretch_mode = 1
 
 [node name="Elf" parent="." instance=ExtResource("3_elf")]
-position = Vector2(600, 270)
+position = Vector2(311, 450)

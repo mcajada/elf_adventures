@@ -21,9 +21,10 @@ config/icon="res://assets/elf_icon.png"
 
 [display]
 
-window/size/viewport_width=1024
-window/size/viewport_height=623
+window/size/viewport_width=623
+window/size/viewport_height=1024
 window/stretch/mode="canvas_items"
+window/stretch/aspect="keep"
 
 [input]
 
